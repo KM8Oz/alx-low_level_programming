@@ -1,18 +1,17 @@
 /**
- * Author: @KM8Oz
  * getlength - get the length of a string
  * @s: input string
  * Return: return the leng of the string
+ * Author: @KM8Oz
  **/
 int getlength(char *s)
 {
     if (*s == '\0')
     {
-        return (0);
+    return (0);
     }
     return (1 + _lenght(s + 1));
 }
-
 /**
  * recursive_check - compare chars of mirrored indexes
  * @i: is the index
@@ -24,22 +23,21 @@ int recursive_check(int i, int l, char *s)
 {
     if (l > 0)
     {
-        if (s[i] == s[l])
-        {
-            return (checkp(i + 1, l - 1, s));
-        }
-        else if (s[i] != s[l])
-        {
-            return (0);
-        }
-        else
-        {
-            return (1);
-        }
+    if (s[i] == s[l])
+    {
+    return (checkp(i + 1, l - 1, s));
+    }
+    else if (s[i] != s[l])
+    {
+    return (0);
+    }
+    else
+    {
+    return (1);
+    }
     }
     return (1);
 }
-
 /**
  * is_palindrome - Checks if a string is a palindrome
  * @s: is the string
@@ -48,5 +46,5 @@ int recursive_check(int i, int l, char *s)
  **/
 int is_palindrome(char *s)
 {
-    return (recursive_check(0, _lenght(s) - 1, s));
+return (recursive_check(0, _lenght(s) - 1, s));
 }

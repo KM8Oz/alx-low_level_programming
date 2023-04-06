@@ -1,9 +1,7 @@
 /**
- * Author: @KM8Oz
  * _print_rev_recursion - prints a string in reverse
- *
+ * Author: @KM8Oz
  * @s: string
- *
  * Return: nothing
 */
 

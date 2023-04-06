@@ -1,11 +1,9 @@
 /**
+ * wildcmp - a function that does the recursion
  * Author: @KM8Oz
- * _sqrt_recursion_sd - a function that does the recursion 
- *
  * @n : input number
  * @min: minimum number to guess
  * @max: maximum number to guess
- *
  * Return: square root of @n or -1
 */
 

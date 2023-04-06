@@ -1,9 +1,7 @@
 /**
- * Author: @KM8Oz
  * _strlen_recursion - a function that returns the length of a string
- *
+ * Author: @KM8Oz
  * @s: string
- *
  * Return: length
 */
 int _strlen_recursion(char *s)
