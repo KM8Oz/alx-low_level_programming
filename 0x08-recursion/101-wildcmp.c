@@ -1,12 +1,10 @@
 /**
- * wildcmp - a function that does the recursion
- * Author: @KM8Oz
- * @n : input number
- * @min: minimum number to guess
- * @max: maximum number to guess
- * Return: square root of @n or -1
+* wildcmp - a function that compares two strings
+* Author: @KM8Oz
+* @s1: string
+* @s2: string
+* Return: 1 | 0
 */
-
 int wildcmp(char *s1, char *s2)
 {
 	if (*s2 == '*' && *(s2 + 1) != '\0' && *s1 == '\0')

@@ -1,7 +1,6 @@
 /**
- * @Author: @KM8Oz
  * _pow_recursion - a function that returns the power of @x by @y x^y
- *
+ * Author: @KM8Oz
  * @x: integer x
  * @y: integer y
  *
