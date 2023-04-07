@@ -1,37 +1,44 @@
 /**
- * _sqrt_recursion_sd - a function that does the recursion
+ * sqrt_recursive - a function that does the recursion
+ *                      in binary thre method
  * Author: @KM8Oz
- * @n : input number
- * @min: minimum number to guess
- * @max: maximum number to guess
+ * @num : input number
+ * @start: minimum number
+ * @end: maximum number
  *
  * Return: square root of @n or -1
-*/
-int _sqrt_recursion_sd(int n, int min, int max)
+ */
+int sqrt_recursive(int num, int start, int end)
 {
-	int guess, guess_squared;
+	float mid = (((float)start + (float)end) / 2);
+	float guess_root = ((float)num / (int)mid);
 
-	guess = (min + max) / 2;
-	guess_squared = guess * guess;
-
-	if (guess_squared == n)
-		return (guess);
-	else if (min == max)
-		return (-1);
-	else if (guess_squared < n)
-		return (_sqrt_recursion_sd(n, guess + 1, max));
+	if (start == end)
+	{
+	return (-1);
+	}
+	if ((guess_root * guess_root) == num)
+	{
+	return ((int)guess_root);
+	}
+	else if (guess_root > mid)
+	{
+	return (sqrt_recursive(num, mid + 1, end));
+	}
 	else
-		return (_sqrt_recursion_sd(n, min, guess - 1));
+	{
+	return (sqrt_recursive(num, start, mid));
+	}
 }
 
 /**
- * _sqrt_recursion - a function that returns the natural
+ * _sqrt_recursion - a function that returns the
  *                   square root of input number
  *
  * @n: input number
  *
  * Return: square root
-*/
+ */
 int _sqrt_recursion(int n)
 {
 	if (n == 1)
@@ -41,5 +48,5 @@ int _sqrt_recursion(int n)
 	else if (n < 0)
 		return (-1);
 	else
-		return (_sqrt_recursion_sd(n, 1, n));
+		return (sqrt_recursive(n, 1, n));
 }
