@@ -67,7 +67,7 @@ void convert(char **words, char *str)
 
 		if (i > 0 && str[i] == ' ' && str[i - 1] != ' ')
 		{
-			create_word(words, str, start, i, j);
+			into_word(words, str, start, i, j);
 			j++;
 			_arg = 0;
 		}
@@ -77,7 +77,7 @@ void convert(char **words, char *str)
 
 	if (_arg == 1)
 	{
-	create_word(words, str, start, i, j);
+	into_word(words, str, start, i, j);
 	}
 }
 
