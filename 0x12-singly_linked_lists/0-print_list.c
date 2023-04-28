@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include "lists.h"
 
 /**
@@ -7,32 +10,20 @@
  */
 size_t print_list(const list_t *h)
 {
-	int i = 0, j = 0;
-	char _null[] = "[0] (nil)\n";
-	char *str = malloc(sizeof(char) * (h->len + 12));
+	int index = 0;
 
 	while (h)
 	{
 		if (h->str == NULL)
 		{
-			while (_null[j] != '\0')
-			{
-				_putchar(_null[j]);
-				++j;
-			}
+			printf("[0] (nil)\n");
 		}
 		else
 		{
-			sprintf(str, "[%d] %s\n", h->len, h->str);
-			j = 0;
-			while (*(str + j) != '\0')
-			{
-				_putchar(*(str + j));
-				++j;
-			}
+		printf("[%d] %s\n", h->len, h->str);
 		}
-		i++;
+		index++;
 		h = h->next;
 	}
-	return (i);
+	return (index);
 }
