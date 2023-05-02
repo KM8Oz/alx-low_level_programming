@@ -15,9 +15,9 @@ int main(void)
     add_nodeint_end(&head, 2);
     add_nodeint_end(&head, 3);
     add_nodeint_end(&head, 4);
-    add_nodeint_end(&head, 98);
-    add_nodeint_end(&head, 402);
-    add_nodeint_end(&head, 1024);
+    add_nodeint_end(&head, 5);
+    add_nodeint_end(&head, 6);
+    add_nodeint_end(&head, 7);
     print_listint(head);
     printf("-----------------\n");
     delete_nodeint_at_index(&head, 5);
