@@ -16,14 +16,17 @@ void handle_errors_0(int a)
 /**
  * handle_errors_1 - a function that handles errors
  * @a: value to check
+ * @file: file
  * @argv: arguments values
  * Return: void
  */
-void handle_errors_1(int a, char *argv[])
+void handle_errors_1(int a, char *argv[], int file)
 {
 	if (a == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		if (file != -1)
+			close(file);
 		exit(98);
 	}
 }
@@ -41,6 +44,7 @@ void handle_errors_2(int a, char *argv[])
 		exit(99);
 	}
 }
+
 /**
  * main - cp function clone in C
  * @argc: argument count
@@ -57,15 +61,19 @@ int main(int argc, char *argv[])
 
 	handle_errors_0(argc);
 	fd_from = open(argv[1], O_RDONLY);
-	handle_errors_1(fd_from, argv);
+	handle_errors_1(fd_from, argv, -1);
 	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, permissions);
-	handle_errors_1(fd_to, argv);
+	handle_errors_1(fd_to, argv, fd_from);
 	while ((read_bytes = read(fd_from, buffer, BUFFER_SIZE)) > 0)
 	{
 		write_bytes = write(fd_to, buffer, read_bytes);
 		if (write_bytes != read_bytes)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+			if (fd_from != -1)
+				close(fd_from);
+			if (fd_to != -1)
+				close(fd_to);
 			exit(99);
 		}
 	}
