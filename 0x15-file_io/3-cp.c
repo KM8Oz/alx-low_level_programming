@@ -1,112 +1,91 @@
 #include "main.h"
 
 /**
- * exit97 - ...
- * @argc: ...
- *
+ * handle_errors_0 - a function that handles errors
+ * @a: value to check
  * Return: void
  */
-void exit97(int argc)
+void handle_errors_0(int a)
 {
-	if (argc != 3)
+	if (a != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 }
-
 /**
- * exit98 - ...
- * @check: ...
- * @file: ...
- * @fd_from: ...
- * @fd_to: ...
- *
+ * handle_errors_1 - a function that handles errors
+ * @a: value to check
+ * @file: file
+ * @argv: arguments values
  * Return: void
  */
-void exit98(ssize_t check, char *file, int fd_from, int fd_to)
+void handle_errors_1(int a, char *argv[], int file)
 {
-	if (check == -1)
+	if (a == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file);
-		if (fd_from != -1)
-			close(fd_from);
-		if (fd_to != -1)
-			close(fd_to);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		if (file != -1)
+			close(file);
 		exit(98);
 	}
 }
-
 /**
- * exit99 - ...
- * @check: ...
- * @file: ...
- * @fd_from: ...
- * @fd_to: ...
- *
+ * handle_errors_2 - a function that handles errors
+ * @a: value to check
+ * @argv: arguments values
  * Return: void
  */
-void exit99(ssize_t check, char *file, int fd_from, int fd_to)
+void handle_errors_2(int a, char *argv[])
 {
-	if (check == -1)
+	if (a == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
-		if (fd_from != -1)
-			close(fd_from);
-		if (fd_to != -1)
-			close(fd_to);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
 		exit(99);
 	}
 }
 
 /**
- * exit100 - ...
- * @check: ...
- * @fd: ...
- *
- * Return: void
- */
-void exit100(int check, int fd)
-{
-	if (check == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-}
-/**
- * main - cp clone
- * @argc: arguments count
+ * main - cp function clone in C
+ * @argc: argument count
  * @argv: arguments values
- *
  * Return: 0 on success or -1 if faild
  */
+
 int main(int argc, char *argv[])
 {
-	int fd_from, fd_to, close_to, close_from;
-	char buffer[1024];
-	ssize_t lr, lw;
-	mode_t file_perm;
+	int fd_from, fd_to;
+	ssize_t read_bytes, write_bytes;
+	char buffer[BUFFER_SIZE];
 
-	exit97(argc);
+	handle_errors_0(argc);
 	fd_from = open(argv[1], O_RDONLY);
-	exit98((ssize_t)fd_from, argv[1], -1, -1);
-	file_perm = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, file_perm);
-	exit99((ssize_t)fd_to, argv[2], fd_from, -1);
-	lr = 1;
-	while (lr == 1)
+	handle_errors_1(fd_from, argv, -1);
+	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC,
+		O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	handle_errors_1(fd_to, argv, fd_from);
+	while ((read_bytes = read(fd_from, buffer, BUFFER_SIZE)) > 0)
 	{
-		lr = read(fd_from, buffer, 1024);
-		exit98(lr, argv[1], fd_from, fd_to);
-		lw = write(fd_to, buffer, lr);
-		if (lw != lr)
-			lw = -1;
-		exit99(lw, argv[2], fd_from, fd_to);
+		write_bytes = write(fd_to, buffer, read_bytes);
+		if (write_bytes != read_bytes)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+			if (fd_from != -1)
+				close(fd_from);
+			if (fd_to != -1)
+				close(fd_to);
+			exit(99);
+		}
 	}
-	close_to = close(fd_to);
-	close_from = close(fd_from);
-	exit100(close_to, fd_to);
-	exit100(close_from, fd_from);
+	if (read_bytes == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
+	if (close(fd_from) == -1 || close(fd_to) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
+		exit(100);
+	}
 	return (0);
 }
