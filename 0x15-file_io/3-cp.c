@@ -57,12 +57,11 @@ int main(int argc, char *argv[])
 	int fd_from, fd_to;
 	ssize_t read_bytes, write_bytes;
 	char buffer[BUFFER_SIZE];
-	mode_t permissions = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	handle_errors_0(argc);
 	fd_from = open(argv[1], O_RDONLY);
 	handle_errors_1(fd_from, argv, -1);
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, permissions);
+	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	handle_errors_1(fd_to, argv, fd_from);
 	while ((read_bytes = read(fd_from, buffer, BUFFER_SIZE)) > 0)
 	{
