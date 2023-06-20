@@ -4,7 +4,7 @@
 
 // Define the custom implementation of rand
 int rand() {
-    return 42; // Return a fixed value for demonstration purposes
+    return 42;
 }
 
 // Define the custom implementation of srand
